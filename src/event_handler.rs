@@ -128,6 +128,18 @@ pub fn register_class_file_load_hook(callback: Option<FnClassFileLoad>) {
     unsafe { CALLBACK_TABLE.class_file_load_hook = callback; }
 }
 
+pub fn register_compiled_method_load_hook(callback: Option<FnCompiledMethodLoad>) {
+    unsafe { CALLBACK_TABLE.compiled_method_load = callback; }
+}
+
+pub fn register_compiled_method_unload_hook(callback: Option<FnCompiledMethodUnload>) {
+    unsafe { CALLBACK_TABLE.compiled_method_unload = callback; }
+}
+
+pub fn register_dynamic_code_generated_hook(callback: Option<FnDynamicCodeGenerated>) {
+    unsafe { CALLBACK_TABLE.dynamic_code_generated = callback; }
+}
+
 pub fn registered_callbacks() -> (jvmtiEventCallbacks, i32) {
     (local_event_callbacks(), size_of::<jvmtiEventCallbacks>() as i32)
 }
@@ -506,17 +518,32 @@ unsafe extern "C" fn local_cb_class_prepare(jvmti_env: *mut jvmtiEnv, jni_env: *
 #[allow(unused_variables)]
 unsafe extern "C" fn local_cb_compiled_method_load(jvmti_env: *mut jvmtiEnv, method: jmethodID, code_size: jint, code_addr: *const c_void, map_length: jint,
                                                    map: *const jvmtiAddrLocationMap, compile_info: *const c_void) -> () {
-
+    match CALLBACK_TABLE.compiled_method_load {
+        Some(function) => {
+            function();
+        },
+        None => println!("No dynamic callback method was found for compiled method load events")
+    }
 }
 
 #[allow(unused_variables)]
 unsafe extern "C" fn local_cb_compiled_method_unload(jvmti_env: *mut jvmtiEnv, method: jmethodID, code_addr: *const c_void) -> () {
-
+    match CALLBACK_TABLE.compiled_method_unload {
+        Some(function) => {
+            function();
+        },
+        None => println!("No dynamic callback method was found for compiled method unload events")
+    }
 }
 
 #[allow(unused_variables)]
 unsafe extern "C" fn local_cb_dynamic_code_generated(jvmti_env: *mut jvmtiEnv, name: *const c_char, address: *const c_void, length: jint) -> () {
-
+    match CALLBACK_TABLE.dynamic_code_generated {
+        Some(function) => {
+            function();
+        },
+        None => println!("No dynamic callback method was found for dynamic code generation events")
+    }
 }
 
 #[allow(unused_variables)]

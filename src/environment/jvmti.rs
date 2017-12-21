@@ -107,6 +107,9 @@ impl JVMTI for JVMTIEnvironment {
         register_garbage_collection_start(callbacks.garbage_collection_start);
         register_garbage_collection_finish(callbacks.garbage_collection_finish);
         register_class_file_load_hook(callbacks.class_file_load_hook);
+        register_compiled_method_load_hook(callbacks.compiled_method_load);
+        register_compiled_method_unload_hook(callbacks.compiled_method_unload);
+        register_dynamic_code_generated_hook(callbacks.dynamic_code_generated);
 
         let (native_callbacks, callbacks_size) = registered_callbacks();
 
