@@ -559,7 +559,12 @@ unsafe extern "C" fn local_cb_native_method_bind(jvmti_env: *mut jvmtiEnv, jni_e
 
 #[allow(unused_variables)]
 unsafe extern "C" fn local_cb_object_free(jvmti_env: *mut jvmtiEnv, tag: jlong) -> () {
-
+    match CALLBACK_TABLE.vm_object_free {
+        Some(function) => {
+            function();
+        },
+        None => println!("No dynamic callback method was found for object free events")
+    }
 }
 
 #[allow(unused_variables)]
