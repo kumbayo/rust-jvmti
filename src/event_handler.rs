@@ -515,12 +515,12 @@ unsafe extern "C" fn local_cb_compiled_method_unload(jvmti_env: *mut jvmtiEnv, m
 }
 
 #[allow(unused_variables)]
-unsafe extern "C" fn local_cb_data_dump_request(jvmti_env: *mut jvmtiEnv) -> () {
+unsafe extern "C" fn local_cb_dynamic_code_generated(jvmti_env: *mut jvmtiEnv, name: *const c_char, address: *const c_void, length: jint) -> () {
 
 }
 
 #[allow(unused_variables)]
-unsafe extern "C" fn local_cb_dynamic_code_generated(jvmti_env: *mut jvmtiEnv, name: *const c_char, address: *const c_void, length: jint) -> () {
+unsafe extern "C" fn local_cb_data_dump_request(jvmti_env: *mut jvmtiEnv) -> () {
 
 }
 

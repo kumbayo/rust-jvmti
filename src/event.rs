@@ -31,8 +31,8 @@ pub type FnNativeMethodBind = fn() -> ();
 pub type FnCompiledMethodLoad = fn() -> ();
 pub type FnCompiledMethodUnload = fn() -> ();
 pub type FnDynamicCodeGenerated = fn() -> ();
-pub type FnResourceExhausted = fn() -> ();
 pub type FnDataDumpRequest = fn() -> ();
+pub type FnResourceExhausted = fn() -> ();
 
 ///
 /// `VMEvent` represents events that can occur in JVM applications. These events can be handled

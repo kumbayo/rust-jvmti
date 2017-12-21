@@ -67,11 +67,11 @@ impl Agent {
 
                 match self.environment.set_event_callbacks(self.callbacks.clone()) {
                     None => {
+                        self.environment.set_event_notification_mode(VMEvent::VMInit, self.callbacks.vm_init.is_some());
+                        self.environment.set_event_notification_mode(VMEvent::VMDeath, self.callbacks.vm_death.is_some());
                         self.environment.set_event_notification_mode(VMEvent::VMObjectAlloc, self.callbacks.vm_object_alloc.is_some());
                         self.environment.set_event_notification_mode(VMEvent::VMObjectFree, self.callbacks.vm_object_free.is_some());
                         self.environment.set_event_notification_mode(VMEvent::VMStart, self.callbacks.vm_start.is_some());
-                        self.environment.set_event_notification_mode(VMEvent::VMInit, self.callbacks.vm_init.is_some());
-                        self.environment.set_event_notification_mode(VMEvent::VMDeath, self.callbacks.vm_death.is_some());
                         self.environment.set_event_notification_mode(VMEvent::MethodEntry, self.callbacks.method_entry.is_some());
                         self.environment.set_event_notification_mode(VMEvent::MethodExit, self.callbacks.method_exit.is_some());
                         self.environment.set_event_notification_mode(VMEvent::ThreadStart, self.callbacks.thread_start.is_some());
