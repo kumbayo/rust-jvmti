@@ -149,7 +149,7 @@ impl Capabilities {
         }
     }
 
-    /// Convert this instance into a native jvmtiCapabilities instance that can be passwd to the
+    /// Convert this instance into a native jvmtiCapabilities instance that can be passed to the
     /// native JVMTI interface
     pub fn to_native(&self) -> jvmtiCapabilities {
         let mut field_map1 = HashMap::new();
